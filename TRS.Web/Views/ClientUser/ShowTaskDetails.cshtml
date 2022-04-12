@@ -1,0 +1,83 @@
+﻿@model TRS.Web.ViewModels.ClientUser.TaskDetailsViewModel
+
+@{
+    ViewBag.Title = "Tapşırıq Detalları";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <input asp-for="@Model.Id" type="hidden" />
+
+    <div class="card">
+        <div class="card-header">
+            <h2>Tapşırıq Detalları</h2>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="col-md-4">Tapırıq adı</label>
+                    <input asp-for="Name" class="col-md-4" disabled="disabled" />
+                </div>
+                <div class="col-md-6">
+                    <label class="col-md-2 align-top">Ətraflı</label>
+                    <textarea asp-for="Description" class="col-md-9" disabled="disabled"></textarea>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <label class="col-md-4">Tapırıq tipi</label>
+                    <input asp-for="TaskType" class="col-md-4" disabled="disabled" />
+                </div>
+                <div class="col-md-6">
+                    <label class="col-md-2">Statusu</label>
+                    <input asp-for="TaskStatus" class="col-md-5" disabled="disabled" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <label class="col-md-4">Vaciblik dərəcəsi</label>
+                    <input asp-for="ImportanceDegree" class="col-md-4" disabled="disabled" />
+                </div>
+            </div>
+            <div class="container row mt-4">
+                <div class="col-md-3">
+                    <label class="">Yaradılıb</label>
+                    <input asp-for="CreateDate" class="" disabled="disabled" />
+                </div>
+                <div class="col-md-3">
+                    <label class="">Təhvil alınıb</label>
+                    <input asp-for="UnderConsiderationDate" class="" disabled="disabled" />
+                </div>
+                <div class="col-md-3">
+                    <label class="">Tamamlanıb</label>
+                    <input asp-for="CompletedDate" class="" disabled="disabled" />
+                </div>
+                <div class="col-md-3">
+                    <label class="">Təsdiqlənib</label>
+                    <input asp-for="ConfirmationDate" class="" disabled="disabled" />
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <div class="row">
+                <a asp-controller="ClientUser" asp-action="ClientTaskList" class="btn btn-outline-info ml-2">Tapşırıqlar</a>
+
+                @if (Model.TaskStatusConst == 0)
+                {
+                    <a asp-controller="ClientUser" asp-action="EditTask" asp-route-taskId="@Model.Id" class="btn btn-outline-warning ml-3">Dəyiş</a>
+                    <form asp-controller="ClientUser" asp-action="DeleteTask" asp-route-taskId="@Model.Id">
+                        <button type="submit" class="btn btn-outline-danger ml-3" onclick="return confirm('Tapşırığı silmək istəyirsinizmi?')"> Sil </button>
+                    </form>
+                }
+                else if (Model.TaskStatusConst == 2)
+                {
+                    <form asp-controller="ClientUser" asp-action="ConfirmTask" asp-route-taskId="@Model.Id">
+                        <button type="submit" class="btn btn-outline-success ml-3" onclick="return confirm('Tapşırığı təsdiqləmək istəyirsinizmi?')"> Təsdiqlə </button>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>

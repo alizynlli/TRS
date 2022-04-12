@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TRS.Core", "TRS.Core\TRS.Core.csproj", "{D6031173-0E86-4DD6-8A23-33F5D8731791}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TRS.Data", "TRS.Data\TRS.Data.csproj", "{4C6C1848-0431-46A9-B759-E4FB60F45F75}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TRS.Web", "TRS.Web\TRS.Web.csproj", "{775DBE2B-F2F7-4157-9DA7-3139999DAFA7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D6031173-0E86-4DD6-8A23-33F5D8731791}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6031173-0E86-4DD6-8A23-33F5D8731791}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6031173-0E86-4DD6-8A23-33F5D8731791}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6031173-0E86-4DD6-8A23-33F5D8731791}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C6C1848-0431-46A9-B759-E4FB60F45F75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C6C1848-0431-46A9-B759-E4FB60F45F75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C6C1848-0431-46A9-B759-E4FB60F45F75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C6C1848-0431-46A9-B759-E4FB60F45F75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{775DBE2B-F2F7-4157-9DA7-3139999DAFA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{775DBE2B-F2F7-4157-9DA7-3139999DAFA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{775DBE2B-F2F7-4157-9DA7-3139999DAFA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{775DBE2B-F2F7-4157-9DA7-3139999DAFA7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {67F25A9F-F69D-410E-BE11-C5E87D50D05E}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,37 @@
+﻿@model TRS.Web.ViewModels.Personnel.TaskTransferViewModel
+
+@{
+    ViewBag.Title = "Tapşırıq Transferi";
+    Layout = "_Layout";
+}
+
+<div class="container mt-4">
+    <h2>Tapşırıq Təhvili</h2>
+
+    <div class="mt-3">
+        <form asp-controller="Personnel" asp-action="TaskTransfer" method="post" class="form-group">
+            <input type="hidden" asp-for="TaskId" />
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label asp-for="TaskName">Tapşırıq adı</label>
+                    <input asp-for="TaskName" class="form-control" disabled="disabled" />
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <label asp-for="PersonnelId">Personal <span class="text-danger">*</span></label>
+                    <select asp-for="PersonnelId" asp-items="@Model.PersonnelList" class="form-control">
+                        <options selected="selected" value="">Birini seçin</options>
+                    </select>
+                    <span asp-validation-for="PersonnelId" class="text-danger"></span>
+                </div>
+            </div>
+            <hr />
+            <div class="mt-2 ml-3">
+                <a asp-controller="Personnel" asp-action="TaskList" class="btn btn-outline-warning">Tapşırıqlar</a>
+                <button type="submit" class="btn btn-outline-success ml-3">Təhvil ver</button>
+            </div>
+        </form>
+    </div>
+</div>

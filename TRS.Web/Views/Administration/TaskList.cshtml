@@ -1,0 +1,332 @@
+﻿@{
+    ViewBag.Title = "Tapşırıqlar";
+    Layout = "_Layout";
+}
+
+@section Styles
+{
+    <link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+}
+
+@{
+    var today = DateTime.Today.ToString("yyyy-MM-dd");
+}
+
+<div class="mt-4">
+    <div class="card card-body">
+        <div class="row ml-1 col-md-12">
+            <div class=" col-md-6">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="taskStatuses" id="newTasks" value="0" checked="checked">
+                    <label class="form-check-label" for="newTasks">Yeni Tapşırıqlar</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="taskStatuses" id="underConsiderationTasks" value="1">
+                    <label class="form-check-label" for="underConsiderationTasks">Baxılanlar</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="taskStatuses" id="completedTasks" value="2">
+                    <label class="form-check-label" for="completedTasks">Tamamlananlar</label>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3">
+                <input id="firstDate" type="date" value="@today" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <div id="newTasksTableContainer">
+            <table id="newTasksTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Tapşırıq adı</th>
+                        <th>Tipi</th>
+                        <th>Vaciblik dərəcəsi</th>
+                        <th style="width: 70px;"></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+        <div id="underConsiderationTasksTableContainer" style="display:none">
+            <table id="underConsiderationTasksTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Tapşırıq adı</th>
+                        <th>Tipi</th>
+                        <th>Vaciblik dərəcəsi</th>
+                        <th style="width: 70px;"></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+        <div id="completedTasksTableContainer" style="display:none">
+            <table id="completedTasksTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Tapşırıq adı</th>
+                        <th>Tipi</th>
+                        <th>Vaciblik dərəcəsi</th>
+                        <th style="width: 70px;"></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        var taskStatus = 0;
+
+        $(document).ready(function () {
+
+            setInterval(function () {
+                if (taskStatus === 0) {
+                    $('#newTasksTable').DataTable().ajax.reload();
+                }
+                else if (taskStatus === 1) {
+                    $('#underConsiderationTasksTable').DataTable().ajax.reload();
+                }
+                else if (taskStatus === 2) {
+                    $('#completedTasksTable').DataTable().ajax.reload();
+                }
+            }, 60000);
+
+            jQuery("#newTasks").attr('checked', true);
+
+            $('#firstDate').change(function () {
+
+                if (taskStatus === 0) {
+                    $('#newTasksTable').DataTable().ajax.reload();
+                }
+                else if (taskStatus === 1) {
+                    $('#underConsiderationTasksTable').DataTable().ajax.reload();
+                }
+                else if (taskStatus === 2) {
+                    $('#completedTasksTable').DataTable().ajax.reload();
+                }
+
+                $('#clientTaskTable').DataTable().ajax.reload();
+            });
+
+            $('input[type=radio][name=taskStatuses]').change(function () {
+                taskStatus = parseInt(this.value);
+
+                $('#newTasksTableContainer').hide();
+                $('#underConsiderationTasksTableContainer').hide();
+                $('#completedTasksTableContainer').hide();
+
+                if (taskStatus === 0) {
+                    $('#newTasksTableContainer').show();
+                    $('#newTasksTable').DataTable().ajax.reload();
+                }
+                else if (taskStatus === 1) {
+                    $('#underConsiderationTasksTableContainer').show();
+                    $('#underConsiderationTasksTable').DataTable().ajax.reload();
+                }
+                else if (taskStatus === 2) {
+                    $('#completedTasksTableContainer').show();
+                    $('#completedTasksTable').DataTable().ajax.reload();
+                }
+            });
+
+            //new tasks table
+            $('#newTasksTable').dataTable({
+                "language": {
+                    "lengthMenu": "Hər səhifədə _MENU_ sətir göstər",
+                    "zeroRecords": "Göstəriləcək qeyd yoxdur.",
+                    "info": "Cəmi səhifə/sətir: _PAGES_/_TOTAL_, cari səhifə: _PAGE_",
+                    "infoEmpty": "Göstəriləcək qeyd yoxdur.",
+                    "infoFiltered": "(Cəmi _MAX_ sətirdən seçilib)",
+                    "search": "Axtarış",
+                    "paginate": {
+                        "first": "İlk",
+                        "last": "Son",
+                        "next": "Növbəti",
+                        "previous": "Əvvəlki"
+                    },
+                    "decimal": "",
+                    "emptyTable": "Göstəriləcək qeyd yoxdur.",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "loadingRecords": "Yüklənir...",
+                    "processing": "Hazırlanır...",
+                    "aria": {
+                        "sortAscending": ": sütun üzrə düzünə sıralama",
+                        "sortDescending": ": sütun üzrə tərsinə sıralama"
+                    }
+                },
+                "processing": true,
+                "serverSide": true,
+                "filter": true,
+                "ajax": {
+                    "url": "/Administration/LoadTasks",
+                    "type": "POST",
+                    "data": function (data) {
+                        var firstDate = $('#firstDate').val();
+
+                        data.taskStatus = 0;
+                        data.firstDate = firstDate;
+                    },
+                    "datatype": "json"
+                },
+                "columnDefs": [
+                    {
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": false
+                    }
+                ],
+                "columns": [
+                    { "data": "id", "name": "Id", "autoWidth": true },
+                    { "data": "taskName", "name": "Tapşırıq adı", "autoWidth": true },
+                    { "data": "taskType", "name": "Tipi", "autoWidth": true },
+                    { "data": "importanceDegree", "name": "Vaciblik dərəcəsi", "autoWidth": true },
+                    {
+                        data: null,
+                        "render": function (data, type, row) {
+                            return "<a href='/Administration/ShowTaskDetails?taskId=" + row.id + "' class='btn btn-info'>Ətraflı</a>";
+                        },
+                        "orderable": false
+                    }
+                ]
+            });
+
+            //underConsiderationTasksTable
+            $('#underConsiderationTasksTable').dataTable({
+                "language": {
+                    "lengthMenu": "Hər səhifədə _MENU_ sətir göstər",
+                    "zeroRecords": "Göstəriləcək qeyd yoxdur.",
+                    "info": "Cəmi səhifə/sətir: _PAGES_/_TOTAL_, cari səhifə: _PAGE_",
+                    "infoEmpty": "Göstəriləcək qeyd yoxdur.",
+                    "infoFiltered": "(Cəmi _MAX_ sətirdən seçilib)",
+                    "search": "Axtarış",
+                    "paginate": {
+                        "first": "İlk",
+                        "last": "Son",
+                        "next": "Növbəti",
+                        "previous": "Əvvəlki"
+                    },
+                    "decimal": "",
+                    "emptyTable": "Göstəriləcək qeyd yoxdur.",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "loadingRecords": "Yüklənir...",
+                    "processing": "Hazırlanır...",
+                    "aria": {
+                        "sortAscending": ": sütun üzrə düzünə sıralama",
+                        "sortDescending": ": sütun üzrə tərsinə sıralama"
+                    }
+                },
+                "processing": true,
+                "serverSide": true,
+                "filter": true,
+                "ajax": {
+                    "url": "/Administration/LoadTasks",
+                    "type": "POST",
+                    "data": function (data) {
+                        var firstDate = $('#firstDate').val();
+
+                        data.taskStatus = 1;
+                        data.firstDate = firstDate;
+                    },
+                    "datatype": "json"
+                },
+                "columnDefs": [
+                    {
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": false
+                    }
+                ],
+                "columns": [
+                    { "data": "id", "name": "Id", "autoWidth": true },
+                    { "data": "taskName", "name": "Tapşırıq adı", "autoWidth": true },
+                    { "data": "taskType", "name": "Tipi", "autoWidth": true },
+                    { "data": "importanceDegree", "name": "Vaciblik dərəcəsi", "autoWidth": true },
+                    {
+                        data: null,
+                        "render": function (data, type, row) {
+                            return "<a href='/Administration/ShowTaskDetails?taskId=" + row.id + "' class='btn btn-info'>Ətraflı</a>";
+                        },
+                        "orderable": false
+                    }
+                ]
+            });
+
+            //completedTasksTable
+            $('#completedTasksTable').dataTable({
+                "language": {
+                    "lengthMenu": "Hər səhifədə _MENU_ sətir göstər",
+                    "zeroRecords": "Göstəriləcək qeyd yoxdur.",
+                    "info": "Cəmi səhifə/sətir: _PAGES_/_TOTAL_, cari səhifə: _PAGE_",
+                    "infoEmpty": "Göstəriləcək qeyd yoxdur.",
+                    "infoFiltered": "(Cəmi _MAX_ sətirdən seçilib)",
+                    "search": "Axtarış",
+                    "paginate": {
+                        "first": "İlk",
+                        "last": "Son",
+                        "next": "Növbəti",
+                        "previous": "Əvvəlki"
+                    },
+                    "decimal": "",
+                    "emptyTable": "Göstəriləcək qeyd yoxdur.",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "loadingRecords": "Yüklənir...",
+                    "processing": "Hazırlanır...",
+                    "aria": {
+                        "sortAscending": ": sütun üzrə düzünə sıralama",
+                        "sortDescending": ": sütun üzrə tərsinə sıralama"
+                    }
+                },
+                "processing": true,
+                "serverSide": true,
+                "filter": true,
+                "ajax": {
+                    "url": "/Administration/LoadTasks",
+                    "type": "POST",
+                    "data": function (data) {
+                        var firstDate = $('#firstDate').val();
+
+                        data.taskStatus = 2;
+                        data.firstDate = firstDate;
+                    },
+                    "datatype": "json"
+                },
+                "columnDefs": [
+                    {
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": false
+                    }
+                ],
+                "columns": [
+                    { "data": "id", "name": "Id", "autoWidth": true },
+                    { "data": "taskName", "name": "Tapşırıq adı", "autoWidth": true },
+                    { "data": "taskType", "name": "Tipi", "autoWidth": true },
+                    { "data": "importanceDegree", "name": "Vaciblik dərəcəsi", "autoWidth": true },
+                    {
+                        data: null,
+                        "render": function (data, type, row) {
+                            return "<a href='/Administration/ShowTaskDetails?taskId=" + row.id + "' class='btn btn-info'>Ətraflı</a>";
+                        },
+                        "orderable": false
+                    }
+                ]
+            });
+        });
+
+    </script>
+}

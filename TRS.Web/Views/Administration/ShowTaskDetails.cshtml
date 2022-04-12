@@ -1,0 +1,97 @@
+﻿@using TRS.Web.ViewModels.Administration.ClientTask;
+@using TRS.Core.Constants.Enums;
+
+@model TaskDetailsViewModel
+
+@{
+    ViewBag.Title = "Tapşırıq Əməliyyatları";
+    Layout = "_Layout";
+}
+
+<div class="container mt-3">
+    <h2 class="text-center">Tapşırıq Detalları</h2>
+
+    <div class="card card-body mt-3">
+        <div class="row">
+            <div class="col-md-6">
+                <label class="col-md-4">Tapşırıq adı</label>
+                <input asp-for="@Model.TaskName" class="col-md-5" disabled="disabled" />
+            </div>
+            <div class="col-md-6">
+                <label class="col-md-4 align-top">Ətraflı</label>
+                <textarea asp-for="@Model.Description" class="col-md-7" disabled="disabled"></textarea>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <label class="col-md-4">Tapşırıq tipi</label>
+                <input asp-for="@Model.TaskType" class="col-md-5" disabled="disabled" />
+            </div>
+            <div class="col-md-6">
+                <label class="col-md-4">Vaciblik dərəcəsi</label>
+                <input asp-for="@Model.ImportanceDegree" class="col-md-5" disabled="disabled" />
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <label class="col-md-4">Statusu</label>
+                <input asp-for="@Model.TaskStatus" class="col-md-5" disabled="disabled" />
+            </div>
+        </div>
+    </div>
+
+    <h2 class="text-center mt-5">Tapşırıq Əməliyyatları</h2>
+
+    @foreach (var operation in Model.Operations)
+    {
+        <div class="card mt-3">
+            <div class="card-header">
+                @if (operation.TaskOperationTypeConst == TaskOperationTypes.Created)
+                {
+                    <h3>Yaradılma</h3>
+                }
+                else if (operation.TaskOperationTypeConst == TaskOperationTypes.WasTaken)
+                {
+                    <h3>Təhvil alınma</h3>
+                }
+                else if (operation.TaskOperationTypeConst == TaskOperationTypes.Completed)
+                {
+                    <h3>Tamamlama</h3>
+                }
+                else if (operation.TaskOperationTypeConst == TaskOperationTypes.Confirmed)
+                {
+                    <h3>Təsdiqləmə</h3>
+                }
+                else if (operation.TaskOperationTypeConst == TaskOperationTypes.Transferred)
+                {
+                    <h3>Təhvil verilmə</h3>
+                }
+            </div>
+
+            <div class="card-body">
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label class="col-md-4">İstifadəçi</label>
+                        <input asp-for="@operation.UserName" class="col-md-5" disabled="disabled" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="col-md-4">Şirkət</label>
+                        <input asp-for="@operation.CompanyName" class="col-md-5" disabled="disabled" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label class="col-md-4">Əməliyyat tarixi</label>
+                        <input asp-for="@operation.OperationDate" class="col-md-5" disabled="disabled" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="container mt-3">
+        <div class="row">
+            <a asp-controller="Administration" asp-action="TaskList" class="btn btn-outline-warning ml-2">Tapşırıqlar</a>
+        </div>
+    </div>
+</div>

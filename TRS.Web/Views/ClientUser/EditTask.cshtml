@@ -1,0 +1,55 @@
+﻿@model TRS.Web.ViewModels.ClientUser.EditClientTaskViewModel
+
+@{
+    ViewBag.Title = "Tapşırıq Detalları";
+    Layout = "_Layout";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Tapşırıq Detalları</h2>
+
+    <div class="mt-3">
+        <form asp-controller="ClientUser" asp-action="EditTask" method="post" class="form-group">
+            <input type="hidden" asp-for="Id" />
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label asp-for="Name">Tapşırığın adı <span class="text-danger">*</span></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <label asp-for="Description">Ətraflı <span class="text-danger">*</span></label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-4">
+                    <label asp-for="ClientTaskTypeId">Tapşırığın tipi <span class="text-danger">*</span></label>
+                    <select asp-for="ClientTaskTypeId" asp-items="@Model.ClientTaskTypes" class="form-control">
+                        <option selected="selected" value="">Tapşırıq tipini seçin</option>
+                    </select>
+                    <span asp-validation-for="ClientTaskTypeId" class="text-danger"></span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <label asp-for="ImportanceDegree">Vaciblik dərəcəsi <span class="text-danger">*</span></label>
+                    <select asp-for="ImportanceDegree" asp-items="@Model.ImportanceDegreeList" class="form-control">
+                        <option selected="selected" value="">Vaciblik dərəcəsini seçin</option>
+                    </select>
+                    <span asp-validation-for="ImportanceDegree" class="text-danger"></span>
+                </div>
+            </div>
+
+            <hr class="mt-5" />
+            <div class="mt-2 ml-3">
+                <a class="btn btn-outline-warning" asp-action="ClientTaskList" asp-controller="ClientUser">Tapşırıqlar</a>
+                <button type="submit" class="btn btn-outline-success ml-3">Saxla</button>
+            </div>
+        </form>
+    </div>
+</div>

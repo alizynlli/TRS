@@ -1,0 +1,24 @@
+﻿@model TRS.Web.ViewModels.Administration.CreateRoleViewModel
+
+@{
+    ViewBag.Title = "Yeni Rol";
+    Layout = "_Layout";
+}
+
+<h2>Create Role</h2>
+
+<div class="container">
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Saxla</button>
+        </div>
+    </form>
+</div>
+
